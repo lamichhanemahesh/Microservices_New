@@ -2,6 +2,7 @@ package com.lamichhane.beer.service.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lamichhane.beer.service.web.model.BeerDto;
+import com.lamichhane.beer.service.web.model.BeerStyleEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -31,7 +32,8 @@ class BeerControllerTest {
 
     @Test
     void saveNewBeer() throws Exception {
-        BeerDto beerDto = BeerDto.builder().build();
+        BeerDto beerDto = BeerDto.builder().beerName("Nepal Ice").beerStyle("Arna").upc(434343l).build();
+        beerDto.setId(null);
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
         mockMvc.perform(post("/api/v1/beer")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -42,7 +44,8 @@ class BeerControllerTest {
     @Test
     void updateBeerById() throws Exception {
 
-        BeerDto beerDto = BeerDto.builder().build();
+        BeerDto beerDto = BeerDto.builder().beerName("Tuborg").beerStyle("LAGER").upc(3443l).build();
+        beerDto.setId(null);
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
         mockMvc.perform(put("/api/v1/beer/"+UUID.randomUUID().toString())
                         .contentType(MediaType.APPLICATION_JSON)
